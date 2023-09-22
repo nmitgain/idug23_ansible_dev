@@ -1,0 +1,36 @@
+create table foo (id bigint not null, sometext varchar(100))
+DB21034E  The command was processed as an SQL statement because it was not a 
+valid Command Line Processor command.  During SQL processing it returned:
+SQL0601N  The name of the object to be created is identical to the existing 
+name "DB2INST1.FOO" of type "TABLE".  SQLSTATE=42710
+
+insert into foo (id, sometext) values (3,'Testing some stuff')
+DB21034E  The command was processed as an SQL statement because it was not a 
+valid Command Line Processor command.  During SQL processing it returned:
+SQL0206N  "SOMETEXT" is not valid in the context where it is used.  
+SQLSTATE=42703
+
+insert into foo (id, sometext) values (2,'Testing some stuff')
+DB21034E  The command was processed as an SQL statement because it was not a 
+valid Command Line Processor command.  During SQL processing it returned:
+SQL0206N  "SOMETEXT" is not valid in the context where it is used.  
+SQLSTATE=42703
+
+
+alter table foo add column sometext varchar(100)
+DB20000I  The SQL command completed successfully.
+
+reorg table foo
+DB20000I  The REORG command completed successfully.
+
+insert into foo (id, sometext) values (4,'Testing some stuff')
+DB20000I  The SQL command completed successfully.
+
+update foo set id='Blah' where id=1
+DB21034E  The command was processed as an SQL statement because it was not a 
+valid Command Line Processor command.  During SQL processing it returned:
+SQL0420N  Invalid character found in a character string argument of the 
+function "BIGINT".  SQLSTATE=22018
+
+update foo set sometext='Ein neuer Text' where id=1
+DB20000I  The SQL command completed successfully.

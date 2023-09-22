@@ -1,0 +1,32 @@
+---
+- name: Check for existing Db2 Instance. Create if neccessary
+  block:
+
+    - name: Check if instance is present
+      shell: '{{ db2_path }}/instance/db2ilist | grep {{ db2_instance }}'
+      register: inst_check
+      changed_when: inst_check.rc < 0
+
+  rescue:
+
+    - name: Debug
+      debug:
+        msg: "Entered Rescue block"
+        verbosity: 1
+
+    - name: Create Db2 instance
+      shell: '{{ db2_path }}/instance/db2icrt -u {{ db2_fenced }} {{ db2_instance }}'  # yamllint disable-line rule:line-length
+      register: inst_create
+
+  always:
+
+    - name: Debug Instance Check
+      debug:
+        var: inst_check.rc
+        verbosity: 2
+
+    - name: Debug Result Instance Create
+      debug:
+        var: inst_create.rc
+        verbosity: 2
+      when: inst_create is defined

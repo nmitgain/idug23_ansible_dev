@@ -1,0 +1,46 @@
+all:
+  hosts:
+  vars:
+    ansible_user: root
+    db2_instance: db2inst1
+    db2_fenced: db2fenc1
+    db2_path: /opt/ibm/db2/V11.5
+  children:
+
+    localhost:
+        hosts:
+            127.0.0.1
+        vars:
+            power_user: true
+    linux:
+      children:
+        target1:
+          hosts:
+            172.19.0.2
+        target2:
+          hosts:
+            172.19.0.3
+          vars:
+            power_user: true
+    db2server:
+      children:
+        db2host1:
+          hosts:
+            172.20.0.2
+          vars:
+            power_user: true
+        db2host2:
+          hosts:
+            172.20.0.3
+          vars:
+            power_user: true
+        db2host3:
+          hosts:
+            172.20.0.4
+          vars:
+            power_user: true
+        db2host4:
+          hosts:
+            172.20.0.5
+          vars:
+            power_user: true

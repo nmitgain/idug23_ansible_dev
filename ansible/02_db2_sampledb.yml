@@ -1,0 +1,18 @@
+---
+
+- hosts: db2server
+  gather_facts: no
+  vars:
+    playbook: 
+      name: 03_db2_sampledb.yml
+      version: "20210600201"
+  tasks:
+    - name: Create the SAMPLE Database on a db2 Server 
+      include_role:
+        name: db2_sampledb 
+        tasks_from: main
+
+    - name: Install essentials
+      include_role:
+        name: install_essentials
+        tasks_from: main

@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module db2_filter</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>db2_filter</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/vagrant/new/ansible-developer-os/ansible/playbook_roles/filter_plugins/db2_filter.py">/home/vagrant/new/ansible-developer-os/ansible/playbook_roles/filter_plugins/db2_filter.py</a></font></td></tr></table>
+    <p><tt>Works&nbsp;as&nbsp;a&nbsp;filter&nbsp;for&nbsp;the&nbsp;output&nbsp;of&nbsp;sql-scripts&nbsp;run&nbsp;with&nbsp;db2&nbsp;-tvf<br>
+Does&nbsp;not&nbsp;work&nbsp;with&nbsp;select&nbsp;statements&nbsp;&nbsp;<br>
+&nbsp;Raises:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AttributeError:&nbsp;&nbsp;db2_sql_code_filter&nbsp;needs&nbsp;a&nbsp;valid&nbsp;SQLCODE&nbsp;<br>
+&nbsp;<br>
+&nbsp;Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;Contains&nbsp;the&nbsp;stripped&nbsp;down&nbsp;output<br>
+&nbsp;<br>
+&nbsp;Usage:&nbsp;<br>
+&nbsp;<br>
+&nbsp;Can&nbsp;be&nbsp;used&nbsp;as&nbsp;a&nbsp;filter&nbsp;in&nbsp;any&nbsp;ansible-script&nbsp;which&nbsp;uses&nbsp;the&nbsp;"shell"-module&nbsp;and&nbsp;"db2&nbsp;-tvf"&nbsp;<br>
+&nbsp;Does&nbsp;not&nbsp;work&nbsp;with&nbsp;SELECT-Statements,&nbsp;but&nbsp;with&nbsp;all&nbsp;kinds&nbsp;of&nbsp;DDL&nbsp;and&nbsp;DML-Errors.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="re.html">re</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="db2_filter.html#DDLScanner">DDLScanner</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="db2_filter.html#DDLScannerFiltered">DDLScannerFiltered</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="db2_filter.html#FilterModule">FilterModule</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DDLScanner">class <strong>DDLScanner</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#DDLScanner">DDLScanner</a>(shell_result)<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="DDLScanner-__init__"><strong>__init__</strong></a>(self, shell_result)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Readonly properties defined here:<br>
+<dl><dt><strong>errors</strong></dt>
+</dl>
+<dl><dt><strong>failed_list</strong></dt>
+</dl>
+<dl><dt><strong>failed_stmts</strong></dt>
+</dl>
+<dl><dt><strong>shell_result</strong></dt>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DDLScannerFiltered">class <strong>DDLScannerFiltered</strong></a>(<a href="db2_filter.html#DDLScanner">DDLScanner</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#DDLScannerFiltered">DDLScannerFiltered</a>(shell_result,&nbsp;sql_error)<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="db2_filter.html#DDLScannerFiltered">DDLScannerFiltered</a></dd>
+<dd><a href="db2_filter.html#DDLScanner">DDLScanner</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="DDLScannerFiltered-__init__"><strong>__init__</strong></a>(self, shell_result, sql_error)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Readonly properties defined here:<br>
+<dl><dt><strong>failed_list</strong></dt>
+</dl>
+<dl><dt><strong>failed_stmts</strong></dt>
+</dl>
+<dl><dt><strong>filtered_errors</strong></dt>
+</dl>
+<dl><dt><strong>sql_error</strong></dt>
+</dl>
+<hr>
+Readonly properties inherited from <a href="db2_filter.html#DDLScanner">DDLScanner</a>:<br>
+<dl><dt><strong>errors</strong></dt>
+</dl>
+<dl><dt><strong>shell_result</strong></dt>
+</dl>
+<hr>
+Data descriptors inherited from <a href="db2_filter.html#DDLScanner">DDLScanner</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="FilterModule">class <strong>FilterModule</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="FilterModule-allerrors_list_flat"><strong>allerrors_list_flat</strong></a>(self, shell_registered_var)</dt></dl>
+
+<dl><dt><a name="FilterModule-allerrors_list_grouped"><strong>allerrors_list_grouped</strong></a>(self, shell_registered_var)</dt></dl>
+
+<dl><dt><a name="FilterModule-db2err_filter"><strong>db2err_filter</strong></a>(self, shell_registered_var)</dt></dl>
+
+<dl><dt><a name="FilterModule-filters"><strong>filters</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="FilterModule-sqlcode_filter"><strong>sqlcode_filter</strong></a>(self, shell_registered_var, sql_error)</dt></dl>
+
+<dl><dt><a name="FilterModule-sqlerrors_list_flat"><strong>sqlerrors_list_flat</strong></a>(self, shell_registered_var, sql_error)</dt></dl>
+
+<dl><dt><a name="FilterModule-sqlerrors_list_grouped"><strong>sqlerrors_list_grouped</strong></a>(self, shell_registerd_var, sql_error)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-validateSQLCODE"><strong>validateSQLCODE</strong></a>(sql_error)</dt></dl>
+</td></tr></table>
+</body></html>

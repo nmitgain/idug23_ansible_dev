@@ -1,0 +1,45 @@
+---
+- name: Check for running Db2 Instance. Start if needed.
+  block:
+
+  - name: Start Intance if needed
+    shell: "{{ lookup('template','check_active_instance.j2') }}"
+    register: active_check
+    changed_when: active_check.rc < 0
+    become: true
+    become_user: '{{ db2_instance }}'
+    no_log: true
+
+  rescue:
+  # if we are still not running, we can fail safely here. No nested block needed
+  - name: Check again for previously halted instance
+    shell: "{{ lookup('template','check_active_instance.j2') }}"
+    register: second_check
+    changed_when: second_check.rc < 0
+    become: true
+    become_user: '{{ db2_instance }}'
+    no_log: true
+
+- name: Check for SAMPLE-Db. Create, if needed
+  block:
+  - name: Check if Sample-DB is in the catalog
+    shell: "{{ lookup('template','check_sample_db.j2') }}"
+    register: sample_found
+    changed_when: sample_found.rc < 0
+    become: true
+    become_user: '{{ db2_instance }}'
+    no_log: true
+
+  rescue:
+  - name: Create the SAMPLE Database
+    shell: "{{ lookup('template','create_sample_db.j2') }}"
+    become: true
+    become_user: '{{ db2_instance }}'
+  always:
+  - name: Activate DB Sample
+    shell: "{{ lookup('template','activate_sample_db.j2') }}"
+    become: true
+    become_user: '{{ db2_instance }}'
+    register: active_db
+    changed_when: active_db.stdout == "DB20000I"
+...

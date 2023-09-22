@@ -1,0 +1,13 @@
+---
+
+- hosts: db2server
+  gather_facts: no
+  vars:
+    playbook: 
+      name: 03_db2_instance_create.yml
+      version: "2021060101"
+  tasks:
+    - name: Create and start a Db2-Instance 
+      include_role:
+        name: db2_instance_create 
+        tasks_from: main

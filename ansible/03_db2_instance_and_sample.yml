@@ -1,0 +1,18 @@
+---
+
+- hosts: db2server 
+  gather_facts: no
+  vars:
+    playbook: 
+      name: 04a_db2_instance_sampledb.yml
+      version: "20210600201"
+  tasks:
+    - name: Ensure that a db2 instance exists
+      include_role:
+        name: db2_instance_create
+        tasks_from: main
+
+    - name: Create the SAMPLE Database on a db2 Server 
+      include_role:
+        name: db2_sampledb 
+        tasks_from: main
